@@ -19,106 +19,223 @@
     </section>
 
     <section class="main-content">
-      <hr>
+      <p>&lt;!DOCTYPE html&gt;</p>
 
-<p>title: "Machine Learning - Course Project"
-author: "Daniel Ramírez Torres"
-date: "22/08/2015"</p>
+<p></p>
 
-<h2>
-<a id="output-html_document" class="anchor" href="#output-html_document" aria-hidden="true"><span class="octicon octicon-link"></span></a>output: html_document</h2>
+<p></p>
 
+<p>
+
+</p>
+
+<p></p>
+
+<p></p>
+
+<p></p>Machine Learning - Course Project
+
+
+
+<p>
+</p>
+
+
+
+
+
+
+
+code{white-space: pre;}
+
+<p></p>
+
+
+
+
+  pre:not([class]) {
+    background-color: white;
+  }
+
+
+
+
+<p></p>
+
+<p></p>
+
+
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img { 
+  max-width:100%; 
+  height: auto; 
+}
+
+
+<div>
+
+
+<div id="header">
+<h1>
+<a id="machine-learning---course-project" class="anchor" href="#machine-learning---course-project" aria-hidden="true"><span class="octicon octicon-link"></span></a>Machine Learning - Course Project</h1>
+<h4>
+<a id="daniel-ramírez-torres" class="anchor" href="#daniel-ram%C3%ADrez-torres" aria-hidden="true"><span class="octicon octicon-link"></span></a><em>Daniel Ramírez Torres</em>
+</h4>
+<h4>
+<a id="22082015" class="anchor" href="#22082015" aria-hidden="true"><span class="octicon octicon-link"></span></a><em>22/08/2015</em>
+</h4>
+</div>
+
+<div id="introduction">
 <h2>
 <a id="introduction" class="anchor" href="#introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h2>
-
-<p>In this project, we will use the information obtained from several accelerometers of 6 participants. The participants were asked to perform barebell lifts correctly an dincorrectly in 5 different ways. The goal of this project is to predict the manner in which they did the exercise. This is the "classe" variable in the training set.</p>
-
+<p>In this project, we will use the information obtained from several accelerometers of 6 participants. The participants were asked to perform barebell lifts correctly an dincorrectly in 5 different ways. The goal of this project is to predict the manner in which they did the exercise. This is the “classe” variable in the training set.</p>
 <p>In the end, the question to answer is: can we predict the quality of the activity?</p>
+</div>
 
+<div id="loading-and-exploring-the-data">
 <h2>
 <a id="loading-and-exploring-the-data" class="anchor" href="#loading-and-exploring-the-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Loading and exploring the data</h2>
-
 <p>First we need to download our training and test sets, as well as load the caret package which will be used later.</p>
-
-<p>Training set download: 
-<a href="https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv">https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv</a></p>
-
-<p>Test set download: 
-<a href="https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv">https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv</a></p>
-
-<div class="highlight highlight-r"><pre>library(<span class="pl-smi">caret</span>)
-<span class="pl-smi">dtrain</span> <span class="pl-k">&lt;-</span> read.csv(<span class="pl-s"><span class="pl-pds">"</span>pml-training.csv<span class="pl-pds">"</span></span>)
-<span class="pl-smi">dtest</span> <span class="pl-k">&lt;-</span> read.csv(<span class="pl-s"><span class="pl-pds">"</span>pml-testing.csv<span class="pl-pds">"</span></span>)</pre></div>
-
-<p>As we want to build a predictor, we'll decompose our training set into two datasets (one for testing and the other to use as supervised training)</p>
-
-<div class="highlight highlight-r"><pre>set.seed(<span class="pl-c1">1234</span>)
-<span class="pl-smi">split</span> <span class="pl-k">&lt;-</span> createDataPartition(<span class="pl-v">y</span><span class="pl-k">=</span><span class="pl-smi">dtrain</span><span class="pl-k">$</span><span class="pl-smi">classe</span>, <span class="pl-v">p</span><span class="pl-k">=</span><span class="pl-c1">0.8</span>, <span class="pl-v">list</span><span class="pl-k">=</span><span class="pl-c1">FALSE</span>)
-<span class="pl-smi">training</span> <span class="pl-k">&lt;-</span> <span class="pl-smi">dtrain</span>[<span class="pl-smi">split</span>, ]
-<span class="pl-smi">testing</span> <span class="pl-k">&lt;-</span> <span class="pl-smi">dtrain</span>[<span class="pl-k">-</span><span class="pl-smi">split</span>, ]
-ncol(<span class="pl-smi">training</span>)</pre></div>
-
+<p>Training set download: <a href="https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv">https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv</a></p>
+<p>Test set download: <a href="https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv">https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv</a></p>
+<pre><code>library(caret)</code></pre>
+<pre><code>## Loading required package: lattice
+## Loading required package: ggplot2</code></pre>
+<pre><code>dtrain &lt;- read.csv("pml-training.csv")
+dtest &lt;- read.csv("pml-testing.csv")</code></pre>
+<p>As we want to build a predictor, we’ll decompose our training set into two datasets (one for testing and the other to use as supervised training)</p>
+<pre><code>set.seed(1234)
+split &lt;- createDataPartition(y=dtrain$classe, p=0.8, list=FALSE)
+training &lt;- dtrain[split, ]
+testing &lt;- dtrain[-split, ]
+ncol(training)</code></pre>
+<pre><code>## [1] 160</code></pre>
 <p>As we can see, we have a lot of features in our dataset. In the next section we will analyze them and clean the dataset in order to use only the relevant features.</p>
-
 <p>The data for this project come from this source: <a href="http://groupware.les.inf.puc-rio.br/har">http://groupware.les.inf.puc-rio.br/har</a>.</p>
+</div>
 
+<div id="cleaning-the-dataset">
 <h2>
 <a id="cleaning-the-dataset" class="anchor" href="#cleaning-the-dataset" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cleaning the dataset</h2>
-
-<p>As we want to reduce the number of features (in both training and testing), we'll do it by removing variables with:</p>
-
+<p>As we want to reduce the number of features (in both training and testing), we’ll do it by removing variables with:</p>
 <ul>
 <li>No intuitive sense in this prediciton.</li>
 <li>Zero variance (or almost zero).</li>
 <li>Most common value NA.</li>
 </ul>
+<pre><code># Removing the first 5 columns: X, user_name, raw_timestamp_part_1, raw_timestamp_part_2, cvtd_timestamp) as they dont make sense for prediction.
+training &lt;- training[, -(1:5)]
+testing &lt;- testing[, -(1:5)]
 
-<div class="highlight highlight-r"><pre><span class="pl-c"># Removing the first 5 columns: X, user_name, raw_timestamp_part_1, raw_timestamp_part_2, cvtd_timestamp) as they dont make sense for prediction.</span>
-<span class="pl-smi">training</span> <span class="pl-k">&lt;-</span> <span class="pl-smi">training</span>[, <span class="pl-k">-</span>(<span class="pl-c1">1</span><span class="pl-k">:</span><span class="pl-c1">5</span>)]
-<span class="pl-smi">testing</span> <span class="pl-k">&lt;-</span> <span class="pl-smi">testing</span>[, <span class="pl-k">-</span>(<span class="pl-c1">1</span><span class="pl-k">:</span><span class="pl-c1">5</span>)]
+# Removing zero variance values
+indexZero &lt;- nearZeroVar(testing)
+training &lt;- training[, -indexZero]
+testing &lt;- testing[, -indexZero]
 
-<span class="pl-c"># Removing zero variance values</span>
-<span class="pl-smi">indexZero</span> <span class="pl-k">&lt;-</span> nearZeroVar(<span class="pl-smi">testing</span>)
-<span class="pl-smi">training</span> <span class="pl-k">&lt;-</span> <span class="pl-smi">training</span>[, <span class="pl-k">-</span><span class="pl-smi">indexZero</span>]
-<span class="pl-smi">testing</span> <span class="pl-k">&lt;-</span> <span class="pl-smi">testing</span>[, <span class="pl-k">-</span><span class="pl-smi">indexZero</span>]
+# Removing variables with NA as most common value.
+indexNA &lt;- sapply(training, function(x) mean(is.na(x))) &gt; 0.9
+training &lt;- training[, indexNA==FALSE]
+testing &lt;- testing[, indexNA==FALSE]
+ncol(training)</code></pre>
+<pre><code>## [1] 54</code></pre>
+</div>
 
-<span class="pl-c"># Removing variables with NA as most common value.</span>
-<span class="pl-smi">indexNA</span> <span class="pl-k">&lt;-</span> sapply(<span class="pl-smi">training</span>, <span class="pl-k">function</span>(<span class="pl-smi">x</span>) mean(is.na(<span class="pl-smi">x</span>))) <span class="pl-k">&gt;</span> <span class="pl-c1">0.9</span>
-<span class="pl-smi">training</span> <span class="pl-k">&lt;-</span> <span class="pl-smi">training</span>[, <span class="pl-smi">indexNA</span><span class="pl-k">==</span><span class="pl-c1">FALSE</span>]
-<span class="pl-smi">testing</span> <span class="pl-k">&lt;-</span> <span class="pl-smi">testing</span>[, <span class="pl-smi">indexNA</span><span class="pl-k">==</span><span class="pl-c1">FALSE</span>]
-ncol(<span class="pl-smi">training</span>)</pre></div>
-
+<div id="modeling-with-random-forests">
 <h2>
 <a id="modeling-with-random-forests" class="anchor" href="#modeling-with-random-forests" aria-hidden="true"><span class="octicon octicon-link"></span></a>Modeling with Random Forests</h2>
-
-<p>As I have some experience with random forests, I have decided to create my model using them. I expect a high accuracy althoug not really good performance (as random forest is quite expensive). Let's build the model:</p>
-
-<div class="highlight highlight-r"><pre>library(<span class="pl-smi">randomForest</span>)
-<span class="pl-smi">model</span> <span class="pl-k">&lt;-</span> randomForest(<span class="pl-smi">classe</span> <span class="pl-k">~</span>. , <span class="pl-v">data</span><span class="pl-k">=</span><span class="pl-smi">training</span>)
-<span class="pl-smi">model</span></pre></div>
-
+<p>As I have some experience with random forests, I have decided to create my model using them. I expect a high accuracy althoug not really good performance (as random forest is quite expensive). Let’s build the model:</p>
+<pre><code>library(randomForest)</code></pre>
+<pre><code>## randomForest 4.6-10
+## Type rfNews() to see new features/changes/bug fixes.</code></pre>
+<pre><code>model &lt;- randomForest(classe ~. , data=training)
+model</code></pre>
+<pre><code>## 
+## Call:
+##  randomForest(formula = classe ~ ., data = training) 
+##                Type of random forest: classification
+##                      Number of trees: 500
+## No. of variables tried at each split: 7
+## 
+##         OOB estimate of  error rate: 0.2%
+## Confusion matrix:
+##      A    B    C    D    E  class.error
+## A 4462    1    0    0    1 0.0004480287
+## B    2 3035    1    0    0 0.0009874918
+## C    0    7 2730    1    0 0.0029218408
+## D    0    0   11 2560    2 0.0050524679
+## E    0    0    0    6 2880 0.0020790021</code></pre>
 <p>Now we can predict our in-sample error using the predict function:</p>
-
-<div class="highlight highlight-r"><pre><span class="pl-smi">predictions</span> <span class="pl-k">&lt;-</span> predict(<span class="pl-smi">model</span>, <span class="pl-smi">testing</span>, <span class="pl-v">type</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>class<span class="pl-pds">"</span></span>)</pre></div>
-
+<pre><code>predictions &lt;- predict(model, testing, type="class")</code></pre>
 <p>Finally, we can test our results using a confusion matrix:</p>
-
-<div class="highlight highlight-r"><pre>confusionMatrix(<span class="pl-smi">predictions</span>, <span class="pl-smi">testing</span><span class="pl-k">$</span><span class="pl-smi">classe</span>)</pre></div>
-
+<pre><code>confusionMatrix(predictions, testing$classe)</code></pre>
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction    A    B    C    D    E
+##          A 1116    1    0    0    0
+##          B    0  757    5    0    0
+##          C    0    1  679    1    0
+##          D    0    0    0  642    0
+##          E    0    0    0    0  721
+## 
+## Overall Statistics
+##                                          
+##                Accuracy : 0.998          
+##                  95% CI : (0.996, 0.9991)
+##     No Information Rate : 0.2845         
+##     P-Value [Acc &gt; NIR] : &lt; 2.2e-16      
+##                                          
+##                   Kappa : 0.9974         
+##  Mcnemar's Test P-Value : NA             
+## 
+## Statistics by Class:
+## 
+##                      Class: A Class: B Class: C Class: D Class: E
+## Sensitivity            1.0000   0.9974   0.9927   0.9984   1.0000
+## Specificity            0.9996   0.9984   0.9994   1.0000   1.0000
+## Pos Pred Value         0.9991   0.9934   0.9971   1.0000   1.0000
+## Neg Pred Value         1.0000   0.9994   0.9985   0.9997   1.0000
+## Prevalence             0.2845   0.1935   0.1744   0.1639   0.1838
+## Detection Rate         0.2845   0.1930   0.1731   0.1637   0.1838
+## Detection Prevalence   0.2847   0.1942   0.1736   0.1637   0.1838
+## Balanced Accuracy      0.9998   0.9979   0.9960   0.9992   1.0000</code></pre>
 <p>As our accuracy is 99.8%, our predicted accuracy for the out-of-sample error is 0.2%.</p>
+</div>
 
+<div id="generating-testfiles">
 <h2>
 <a id="generating-testfiles" class="anchor" href="#generating-testfiles" aria-hidden="true"><span class="octicon octicon-link"></span></a>Generating testfiles</h2>
-
-<div class="highlight highlight-r"><pre><span class="pl-smi">output</span> <span class="pl-k">&lt;-</span> predict(<span class="pl-smi">model</span>, <span class="pl-smi">dtest</span>, <span class="pl-v">type</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>class<span class="pl-pds">"</span></span>)
-<span class="pl-v">pml_write_files</span> <span class="pl-k">=</span> <span class="pl-k">function</span>(<span class="pl-smi">x</span>){
-  <span class="pl-v">n</span> <span class="pl-k">=</span> length(<span class="pl-smi">x</span>)
-  <span class="pl-k">for</span>(<span class="pl-smi">i</span> <span class="pl-k">in</span> <span class="pl-c1">1</span><span class="pl-k">:</span><span class="pl-smi">n</span>){
-    <span class="pl-v">filename</span> <span class="pl-k">=</span> paste0(<span class="pl-s"><span class="pl-pds">"</span>problem_id_<span class="pl-pds">"</span></span>,<span class="pl-smi">i</span>,<span class="pl-s"><span class="pl-pds">"</span>.txt<span class="pl-pds">"</span></span>)
-    write.table(<span class="pl-smi">x</span>[<span class="pl-smi">i</span>],<span class="pl-v">file</span><span class="pl-k">=</span><span class="pl-smi">filename</span>,<span class="pl-v">quote</span><span class="pl-k">=</span><span class="pl-c1">FALSE</span>,<span class="pl-v">row.names</span><span class="pl-k">=</span><span class="pl-c1">FALSE</span>,<span class="pl-v">col.names</span><span class="pl-k">=</span><span class="pl-c1">FALSE</span>)
+<pre><code>output &lt;- predict(model, dtest, type="class")
+pml_write_files = function(x){
+  n = length(x)
+  for(i in 1:n){
+    filename = paste0("problem_id_",i,".txt")
+    write.table(x[i],file=filename,quote=FALSE,row.names=FALSE,col.names=FALSE)
   }
 }
-pml_write_files(<span class="pl-smi">output</span>)</pre></div>
+pml_write_files(output)</code></pre>
+</div>
+
+<p></p>
+</div>
+
+
+
+
+
+
+
+<p>
+</p>
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/dramirezt/MachineLearningCP">Machine Learning Course Project</a> is maintained by <a href="https://github.com/dramirezt">dramirezt</a>.</span>
