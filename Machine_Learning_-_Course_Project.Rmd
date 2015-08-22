@@ -1,0 +1,109 @@
+---
+title: "Machine Learning - Course Project"
+author: "Daniel Ramírez Torres"
+date: "22/08/2015"
+output: html_document
+---
+
+## Introduction
+
+In this project, we will use the information obtained from several accelerometers of 6 participants. The participants were asked to perform barebell lifts correctly an dincorrectly in 5 different ways. The goal of this project is to predict the manner in which they did the exercise. This is the "classe" variable in the training set.
+
+In the end, the question to answer is: can we predict the quality of the activity?
+
+
+## Loading and exploring the data
+
+First we need to download our training and test sets, as well as load the caret package which will be used later.
+
+Training set download: 
+https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv
+
+Test set download: 
+https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv
+
+
+```{r}
+library(caret)
+dtrain <- read.csv("pml-training.csv")
+dtest <- read.csv("pml-testing.csv")
+```
+
+As we want to build a predictor, we'll decompose our training set into two datasets (one for testing and the other to use as supervised training)
+
+```{r}
+set.seed(1234)
+split <- createDataPartition(y=dtrain$classe, p=0.8, list=FALSE)
+training <- dtrain[split, ]
+testing <- dtrain[-split, ]
+ncol(training)
+```
+
+
+As we can see, we have a lot of features in our dataset. In the next section we will analyze them and clean the dataset in order to use only the relevant features.
+
+The data for this project come from this source: http://groupware.les.inf.puc-rio.br/har.
+
+
+## Cleaning the dataset
+
+As we want to reduce the number of features (in both training and testing), we'll do it by removing variables with:
+
+- No intuitive sense in this prediciton.
+- Zero variance (or almost zero).
+- Most common value NA.
+
+```{r}
+# Removing the first 5 columns: X, user_name, raw_timestamp_part_1, raw_timestamp_part_2, cvtd_timestamp) as they dont make sense for prediction.
+training <- training[, -(1:5)]
+testing <- testing[, -(1:5)]
+
+# Removing zero variance values
+indexZero <- nearZeroVar(testing)
+training <- training[, -indexZero]
+testing <- testing[, -indexZero]
+
+# Removing variables with NA as most common value.
+indexNA <- sapply(training, function(x) mean(is.na(x))) > 0.9
+training <- training[, indexNA==FALSE]
+testing <- testing[, indexNA==FALSE]
+ncol(training)
+```
+
+## Modeling with Random Forests
+
+As I have some experience with random forests, I have decided to create my model using them. I expect a high accuracy althoug not really good performance (as random forest is quite expensive). Let's build the model:
+
+```{r}
+library(randomForest)
+model <- randomForest(classe ~. , data=training)
+model
+```
+
+Now we can predict our in-sample error using the predict function:
+
+```{r}
+predictions <- predict(model, testing, type="class")
+```
+
+Finally, we can test our results using a confusion matrix:
+
+```{r}
+confusionMatrix(predictions, testing$classe)
+```
+
+As our accuracy is 99.8%, our predicted accuracy for the out-of-sample error is 0.2%.
+
+## Generating testfiles
+
+```{r}
+output <- predict(model, dtest, type="class")
+pml_write_files = function(x){
+  n = length(x)
+  for(i in 1:n){
+    filename = paste0("problem_id_",i,".txt")
+    write.table(x[i],file=filename,quote=FALSE,row.names=FALSE,col.names=FALSE)
+  }
+}
+pml_write_files(output)
+```
